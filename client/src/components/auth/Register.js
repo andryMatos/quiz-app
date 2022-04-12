@@ -91,7 +91,7 @@ class Register extends Component {
                                     })}
                                   />
                                   <label htmlFor="name" className="form-label">Nombre</label>
-                                  <span className="red-text">{errors.name}</span>
+                                  <span className="text-danger">{errors.name}</span>
                                 </div>
                               </div>
 
@@ -110,7 +110,7 @@ class Register extends Component {
                                     })}
                                   />
                                   <label htmlFor="email" className="form-label">Email</label>
-                                  <span className="red-text">{errors.email}</span>
+                                  <span className="text-danger">{errors.email}</span>
                                 </div>
                               </div>
 
@@ -128,7 +128,7 @@ class Register extends Component {
                                     })}
                                   />
                                   <label htmlFor="password" className="form-label">Contraseña</label>
-                                  <span className="red-text">{errors.password}</span>
+                                  <span className="text-danger">{errors.password}</span>
                                 </div>
                               </div>
 
@@ -146,7 +146,7 @@ class Register extends Component {
                                     })}
                                   />
                                   <label htmlFor="password2" className="form-label">Confirmar Contraseña</label>
-                                  <span className="red-text">{errors.password2}</span>
+                                  <span className="text-danger">{errors.password2}</span>
                                 </div>
                               </div>
 
@@ -159,7 +159,7 @@ class Register extends Component {
                                     marginTop: "1rem"
                                   }}
                                   type="submit"
-                                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                  className="btn btn-light"
                                 >
                                   Registrarse
                                 </button>                              

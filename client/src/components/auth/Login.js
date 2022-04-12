@@ -67,8 +67,9 @@ class Login extends Component {
                 ¿Aún no tienes una cuenta? <Link to="/register">Registrate aqui</Link>
               </p>
             </div>
+
             <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
+              <div className="form-outline mb-4">
                 <input
                   onChange={this.onChange}
                   value={this.state.email}
@@ -76,47 +77,47 @@ class Login extends Component {
                   id="email"
                   type="email"
                   autocomplete="off"
-                  className={classnames("", {
+                  className={classnames("form-control", {
                     invalid: errors.email || errors.emailnotfound
                   })}
                 />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">
-                  {errors.email}
-                  {errors.emailnotfound}
-                </span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password || errors.passwordincorrect
-                  })}
-                />
-                <label htmlFor="password">Contraseña</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Iniciar Sesión
-                </button>
-              </div>
+                  <label htmlFor="email">Email</label>
+                  <span className="text-danger">
+                    {errors.email}
+                    {errors.emailnotfound}
+                  </span>              
+                </div>
+                <div className="form-outline mb-4">
+                  <input
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                    id="password"
+                    type="password"
+                    className={classnames("form-control", {
+                      invalid: errors.password || errors.passwordincorrect
+                    })}
+                  />
+                  <label htmlFor="password">Contraseña</label>
+                  <span className="text-danger">
+                    {errors.password}
+                    {errors.passwordincorrect}
+                  </span>
+                </div>
+                <div className="form-outline mb-4">
+                  <button
+                    style={{
+                      width: "150px",
+                      borderRadius: "3px",
+                      letterSpacing: "1.5px",
+                      marginTop: "1rem"
+                    }}
+                    type="submit"
+                    className="btn btn-light"
+                  >
+                    Iniciar Sesión
+                  </button>
+                </div>
             </form>
           </div>
         </div>

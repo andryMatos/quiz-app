@@ -46,5 +46,23 @@ router.post("/getquiz",(req,res) =>{
 
 })
 
+router.post("/getquizz",(req, res)=>{
+    Quiz.find((err, lista_quiz) => {
+        if (err) {
+            res.json({
+                resultado: false,
+                msj: 'No se encontraron registros',
+                err
+            });
+        } else {
+            res.json({
+                resultado: true,
+                msj: 'Registros encontrados',
+                lista_quiz
+            });
+        }
+    });
+})
+
 module.exports = router;
 

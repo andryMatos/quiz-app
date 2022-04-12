@@ -36,8 +36,6 @@ class Dashboard extends Component {
             >
               Cerrar Sesión
             </button>
-          </div>
-          <div className="col s12">
             <Link
               to="/quiz"
               style={{
@@ -48,6 +46,18 @@ class Dashboard extends Component {
                 className="btn btn-large btn-flat waves-effect white black-text"
               >
                 Jugar
+            </Link>
+
+            <Link
+              to="/Catalog"
+              style={{
+                width: "140px",
+                borderRadius: "3px",
+                letterSpacing: "1.5px"
+              }}
+                className="btn btn-large btn-flat waves-effect white black-text"
+              >
+                Trivias Existentes
             </Link>
           </div>
         </div>

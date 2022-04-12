@@ -100,8 +100,8 @@ router.post("/login", (req, res) => {
 
 router.post("/addquiz", (req, res) => {
 
-  User.findByIdAndUpdate(
-    req.body.id, 
+  User.findOneAndUpdate(
+    {name: req.body.id}, 
     {
        $push: { 
           games: [{ 
@@ -148,6 +148,5 @@ router.post("/getquizbyuser", (req, res) => {
   );
 
 });
-
 
 module.exports = router;

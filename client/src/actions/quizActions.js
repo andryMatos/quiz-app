@@ -19,7 +19,6 @@ export const getQuiz = (id) => dispatch => {
 }
 
 export const saveQuiz = (quizData) => dispatch => {
-  console.log("quiz data =>>>>>>>>>", quizData);
   axios
     .post("/api/quiz/addquiz", quizData)
     .then(res => dispatch({type: "SUCCESS", payload: res.response.data}))

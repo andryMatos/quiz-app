@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../src/App.css";
 
+
 function Quiz() {
 
   const defaultState = {
@@ -19,11 +20,12 @@ function Quiz() {
   };
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
+  const [puntuacion, setScore] = useState(0);
   const [questions1, setQuestions] = useState(defaultState);
   const [resultsquiz, setResultQuiz] = useState([]);
-  
+
   useEffect(() => {
+
     axios.post('/api/quiz/getquizz')
         .then(function (response) {
           let ra = Math.floor(Math.random() * (response.data.lista_quiz.length - 0))+ 0;
@@ -38,25 +40,37 @@ function Quiz() {
   const optionClicked = (option, idx) => {
     // Incremento de puntuación
     if (option.correcto) {
-      setScore(score + 1);
+      setScore(puntuacion + 1);
+      questions1.questions[currentQuestion].respuestas[idx]['seleccion'] = true;
     }
-    questions1.questions[currentQuestion].respuestas[idx]['seleccion'] = true;
 
     if (currentQuestion + 1 < questions1.questions.length) {
       setCurrentQuestion(currentQuestion + 1);
       setResultQuiz(resultsquiz.concat(questions1.questions[currentQuestion]));
 
     } else {
+      setResultQuiz(resultsquiz.concat(questions1.questions[currentQuestion]));
       setShowResults(true);
     }
-
-
-    console.log("=>>>>>>>>>>>>>",resultsquiz);
 
   };
 
   const saveGame = () => {
-    console.log("sapeeeeeeee", resultsquiz);
+    let data = {
+      id:"Andry",
+      game:questions1.name,
+      score:puntuacion,
+      name: questions1.name,
+      questions:resultsquiz
+    }
+    console.log("data =>>>>>>>>>>", data);
+    axios.post('/api/users/addquiz', data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const restartGame = () => {
@@ -64,22 +78,41 @@ function Quiz() {
     setCurrentQuestion(0);
     setShowResults(false);
     saveGame();
+    setResultQuiz([]);
   };
 
   return (
     <div className="App">
       <h1>Cuestionario</h1>
 
-      <h2>Aciertos: {score}</h2>
+      <h2>Aciertos: {puntuacion}</h2>
 
       {showResults ? (
         <div className="container">
           <div className="card text-center">
             <div className="card-body">
               <h5 className="card-title">Resultado</h5>
-              <p className="card-text">{score} aciertos de {questions1.questions.length} Correctos - (
-              {(score / questions1.questions.length) * 100}%)</p>
+              <p className="card-text">{puntuacion} aciertos de {questions1.questions.length} Correctos - (
+              {(puntuacion / questions1.questions.length) * 100}%)</p>
               <a href="#" className="btn btn-success" onClick={() => restartGame()}>Jugar de nuevo</a>
+            </div>
+            <div>                
+                  {resultsquiz.map((res, idx) => (
+                    <div>
+                      <div key={idx}>Pregunta: {res.texto}</div>
+                      <ul className="list-group">
+                        {res.respuestas.map((r, index) => (
+                          r.correcto && r.seleccion ?
+                          <li className="list-group-item-success" key={index}>Correcto: {r.texto}</li>
+                          : r.seleccion ? 
+                          <li className="list-group-item list-group-item-warning" key={index}>{r.texto}</li>
+                          :
+                          <li className="list-group-item" key={index}>{r.texto}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  
             </div>
           </div>
         </div>

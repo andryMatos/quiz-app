@@ -274,7 +274,7 @@ function Catalog(auth) {
                                     <ul className="list-group">
                                         {q.respuestas.map((r, idx) => (
                                             r.correcto ?
-                                            <li className="list-group-item-success" key={idx}>Correcto: {r.texto}</li>
+                                            <li className="list-group-item list-group-item-success" key={idx}>Correcto: {r.texto}</li>
                                             :
                                             <li className="list-group-item" key={idx}>{r.texto}</li>
 

@@ -15,6 +15,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Quiz from "./components/quiz/quiz";
 import Catalog from "./components/quizcat/index";
+import Games from "./components/games";
 
 import "./App.css";
 
@@ -51,6 +52,7 @@ class App extends Component {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/quiz" component={Quiz}/>
               <PrivateRoute exact path="/Catalog" component={Catalog}/>
+              <PrivateRoute exact path="/games" component={Games}/>
             </Switch>
           </div>
         </Router>

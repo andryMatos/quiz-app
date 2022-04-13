@@ -108,7 +108,7 @@ function Quiz(Auth) {
                       <ul className="list-group">
                         {res.respuestas.map((r, index) => (
                           r.correcto && r.seleccion ?
-                          <li className="list-group-item-success" key={index}>Correcto: {r.texto}</li>
+                          <li className="list-group-item list-group-item-success" key={index}>Correcto: {r.texto}</li>
                           : r.seleccion ? 
                           <li className="list-group-item list-group-item-warning" key={index}>Tu selección :( :{r.texto}</li>
                           :

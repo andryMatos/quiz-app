@@ -3,8 +3,7 @@ import axios from "axios";
 import "../../../src/App.css";
 
 
-function Quiz() {
-
+function Quiz(Auth) {
   const defaultState = {
     questions:[{
       texto: "",
@@ -23,13 +22,19 @@ function Quiz() {
   const [puntuacion, setScore] = useState(0);
   const [questions1, setQuestions] = useState(defaultState);
   const [resultsquiz, setResultQuiz] = useState([]);
+  const [userID, setUserID] = useState(Auth.user.id);
 
   useEffect(() => {
 
     axios.post('/api/quiz/getquizz')
         .then(function (response) {
-          let ra = Math.floor(Math.random() * (response.data.lista_quiz.length - 0))+ 0;
-          setQuestions(response.data.lista_quiz[ra]);
+          if(response.data.lista_quiz.length > 0){
+            let ra = Math.floor(Math.random() * (response.data.lista_quiz.length - 0))+ 0;
+            setQuestions(response.data.lista_quiz[ra]);
+          }else{
+
+          }
+          
         })
         .catch(function (error) {
           console.log(error);
@@ -41,8 +46,8 @@ function Quiz() {
     // Incremento de puntuación
     if (option.correcto) {
       setScore(puntuacion + 1);
-      questions1.questions[currentQuestion].respuestas[idx]['seleccion'] = true;
     }
+    questions1.questions[currentQuestion].respuestas[idx]['seleccion'] = true;
 
     if (currentQuestion + 1 < questions1.questions.length) {
       setCurrentQuestion(currentQuestion + 1);
@@ -57,7 +62,7 @@ function Quiz() {
 
   const saveGame = () => {
     let data = {
-      id:"Andry",
+      id:userID,
       game:questions1.name,
       score:puntuacion,
       name: questions1.name,
@@ -98,14 +103,14 @@ function Quiz() {
             </div>
             <div>                
                   {resultsquiz.map((res, idx) => (
-                    <div>
-                      <div key={idx}>Pregunta: {res.texto}</div>
+                    <div key={idx}>
+                      <div >Pregunta: {res.texto}</div>
                       <ul className="list-group">
                         {res.respuestas.map((r, index) => (
                           r.correcto && r.seleccion ?
                           <li className="list-group-item-success" key={index}>Correcto: {r.texto}</li>
                           : r.seleccion ? 
-                          <li className="list-group-item list-group-item-warning" key={index}>{r.texto}</li>
+                          <li className="list-group-item list-group-item-warning" key={index}>Tu selección :( :{r.texto}</li>
                           :
                           <li className="list-group-item" key={index}>{r.texto}</li>
                         ))}

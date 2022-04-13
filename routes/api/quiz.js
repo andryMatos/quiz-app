@@ -46,7 +46,7 @@ router.post("/getquiz",(req,res) =>{
 
 })
 
-router.post("/getquizz",(req, res)=>{
+router.post("/getquizz",(req, res) => {
     Quiz.find((err, lista_quiz) => {
         if (err) {
             res.json({
@@ -62,6 +62,49 @@ router.post("/getquizz",(req, res)=>{
             });
         }
     });
+})
+
+router.post("/addAnswer",(req, res) => {
+    Quiz.findByIdAndUpdate(req.body.id,
+        {
+            $push: {
+                questions : [{
+                    texto: req.body.texto,
+                    respuestas: req.body.respuestas
+                }]
+            }
+        },
+        {new: true},
+        function(err, quiz){
+            if(err){
+                return res.status(500).send({
+                    message: err.message || "Some error has ocurred"
+                });
+            }
+            if(!quiz){
+                return res.status(404).send({
+                    message: "Quiz Not found"
+                });
+            }
+            return res.status(200).send(quiz);
+        })
+})
+
+router.post("/deletequiz",(req, res) => {
+    Quiz.findByIdAndDelete(req.body.id,
+        function(err, quiz){
+            if(err){
+                return res.status(500).send({
+                   message: err.message || "Some error has ocurred" 
+                });
+            }
+            if(!quiz){
+                return res.status(404).send({
+                    message: "Quiz Not Found"
+                });
+            }
+            return res.status(200).send(quiz);
+        })
 })
 
 module.exports = router;

@@ -101,7 +101,7 @@ router.post("/login", (req, res) => {
 router.post("/addquiz", (req, res) => {
 
   User.findOneAndUpdate(
-    {name: req.body.id}, 
+    {_id: req.body.id}, 
     {
        $push: { 
           games: [{ 

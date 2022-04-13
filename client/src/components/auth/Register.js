@@ -69,23 +69,23 @@ class Register extends Component {
                   ¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión aqui</Link>
                 </p>
               </div>
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                  <div class="col-lg-12 col-xl-11">
-                    <div class="card text-black" style={{borderRadius: '25px;'}}>
-                      <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                          <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                            <form class="mx-1 mx-md-4 mt-5" noValidate onSubmit={this.onSubmit}>
-                              <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                <div class="form-outline flex-fill mb-0">
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                  <div className="col-lg-12 col-xl-11">
+                    <div className="card text-black">
+                      <div className="card-body p-md-5">
+                        <div className="row justify-content-center">
+                          <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <form className="mx-1 mx-md-4 mt-5" noValidate onSubmit={this.onSubmit}>
+                              <div className="d-flex flex-row align-items-center mb-4">
+                                <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                                <div className="form-outline flex-fill mb-0">
                                   <input
                                     onChange={this.onChange}
                                     value={this.state.name}
                                     error={errors.name}
                                     id="name"
                                     type="text"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     className={classnames("form-control", {
                                       invalid: errors.name
                                     })}
@@ -95,16 +95,16 @@ class Register extends Component {
                                 </div>
                               </div>
 
-                              <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                <div class="form-outline flex-fill mb-0">
+                              <div className="d-flex flex-row align-items-center mb-4">
+                                <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                <div className="form-outline flex-fill mb-0">
                                   <input
                                     onChange={this.onChange}
                                     value={this.state.email}
                                     error={errors.email}
                                     id="email"
                                     type="email"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     className={classnames("form-control", {
                                       invalid: errors.email
                                     })}
@@ -114,9 +114,9 @@ class Register extends Component {
                                 </div>
                               </div>
 
-                              <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                <div class="form-outline flex-fill mb-0">
+                              <div className="d-flex flex-row align-items-center mb-4">
+                                <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                <div className="form-outline flex-fill mb-0">
                                   <input
                                     onChange={this.onChange}
                                     value={this.state.password}
@@ -132,9 +132,9 @@ class Register extends Component {
                                 </div>
                               </div>
 
-                              <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                <div class="form-outline flex-fill mb-0">
+                              <div className="d-flex flex-row align-items-center mb-4">
+                                <i className="fas fa-key fa-lg me-3 fa-fw"></i>
+                                <div className="form-outline flex-fill mb-0">
                                   <input
                                     onChange={this.onChange}
                                     value={this.state.password2}
@@ -150,7 +150,7 @@ class Register extends Component {
                                 </div>
                               </div>
 
-                              <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                 <button
                                   style={{
                                     width: "150px",
@@ -167,9 +167,9 @@ class Register extends Component {
                             </form>
 
                           </div>
-                          <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                          <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                            <img src="https://www.stockvault.net/data/2018/08/31/254123/preview16.jpg" class="img-fluid" alt="Sample image"/>
+                            <img src="https://www.stockvault.net/data/2018/08/31/254123/preview16.jpg" className="img-fluid" alt="Sample image"/>
 
                           </div>
                         </div>

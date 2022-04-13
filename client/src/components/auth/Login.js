@@ -67,58 +67,70 @@ class Login extends Component {
                 ¿Aún no tienes una cuenta? <Link to="/register">Registrate aqui</Link>
               </p>
             </div>
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-lg-12 col-xl-11">
+                <div className="card text-black">
+                  <div className="card-body p-md-5">
+                    <div className="row justify-content-center">
+                      <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="form-outline mb-4">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  autocomplete="off"
-                  className={classnames("form-control", {
-                    invalid: errors.email || errors.emailnotfound
-                  })}
-                />
-                  <label htmlFor="email">Email</label>
-                  <span className="text-danger">
-                    {errors.email}
-                    {errors.emailnotfound}
-                  </span>              
+                      <form noValidate onSubmit={this.onSubmit}>
+                        <div className="form-outline mb-4">
+                          <input
+                            onChange={this.onChange}
+                            value={this.state.email}
+                            error={errors.email}
+                            id="email"
+                            type="email"
+                            autoComplete={"off"}
+                            className={classnames("form-control", {
+                              invalid: errors.email || errors.emailnotfound
+                            })}
+                          />
+                            <label htmlFor="email">Email</label>
+                            <span className="text-danger">
+                              {errors.email}
+                              {errors.emailnotfound}
+                            </span>              
+                          </div>
+                          <div className="form-outline mb-4">
+                            <input
+                              onChange={this.onChange}
+                              value={this.state.password}
+                              error={errors.password}
+                              id="password"
+                              type="password"
+                              className={classnames("form-control", {
+                                invalid: errors.password || errors.passwordincorrect
+                              })}
+                            />
+                            <label htmlFor="password">Contraseña</label>
+                            <span className="text-danger">
+                              {errors.password}
+                              {errors.passwordincorrect}
+                            </span>
+                          </div>
+                          <div className="form-outline mb-4">
+                            <button
+                              style={{
+                                width: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                marginTop: "1rem"
+                              }}
+                              type="submit"
+                              className="btn btn-light"
+                            >
+                              Iniciar Sesión
+                            </button>
+                          </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="form-outline mb-4">
-                  <input
-                    onChange={this.onChange}
-                    value={this.state.password}
-                    error={errors.password}
-                    id="password"
-                    type="password"
-                    className={classnames("form-control", {
-                      invalid: errors.password || errors.passwordincorrect
-                    })}
-                  />
-                  <label htmlFor="password">Contraseña</label>
-                  <span className="text-danger">
-                    {errors.password}
-                    {errors.passwordincorrect}
-                  </span>
-                </div>
-                <div className="form-outline mb-4">
-                  <button
-                    style={{
-                      width: "150px",
-                      borderRadius: "3px",
-                      letterSpacing: "1.5px",
-                      marginTop: "1rem"
-                    }}
-                    type="submit"
-                    className="btn btn-light"
-                  >
-                    Iniciar Sesión
-                  </button>
-                </div>
-            </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

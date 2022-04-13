@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
-
 
 function Row({ onChange, onRemove, texto, correcto }) {
     return (
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-10">
                     <input
                     value={texto}
                     className="form-control"
@@ -17,8 +16,8 @@ function Row({ onChange, onRemove, texto, correcto }) {
                     Correcta:
                     <input type="checkbox" value={correcto} onChange={e => onChange("correcto", e.target.value)} />
                 </label>
-                <div className="col-md-4">
-                    <button type="button" className="btn btn-danger mb-4" onClick={onRemove}>Eliminar</button>
+                <div className="col-md-12">
+                    <button type="button" className="btn btn-danger mb-4 mt-4" onClick={onRemove}>Eliminar</button>
                 </div>
             </div>
     );

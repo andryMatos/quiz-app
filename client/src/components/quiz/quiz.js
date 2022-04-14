@@ -77,6 +77,7 @@ function Quiz(Auth) {
       })
       .catch(function (error) {
       });
+      getData();
   };
 
   const restartGame = () => {

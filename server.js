@@ -23,7 +23,10 @@ const db = require("./config/keys").mongoURI;
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    { 
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
   )
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
@@ -38,10 +41,10 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/quiz", quiz);
 
-app.use(express.static('client/build'));
+app.use(express.static(path.resolve(__dirname,'client/build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client','build','index.html'))
+  res.sendFile(path.resolve(__dirname, 'client/build','index.html'))
 });
 
 

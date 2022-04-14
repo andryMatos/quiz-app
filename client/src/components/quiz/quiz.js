@@ -26,6 +26,11 @@ function Quiz(Auth) {
 
   useEffect(() => {
 
+    getData();
+
+  },[])
+
+  const getData = () => {
     axios.post('/api/quiz/getquizz')
         .then(function (response) {
           if(response.data.lista_quiz.length > 0){
@@ -39,8 +44,7 @@ function Quiz(Auth) {
         .catch(function (error) {
           console.log(error);
         });
-
-  },[])
+  }
  
   const optionClicked = (option, idx) => {
     // Incremento de puntuación
@@ -68,13 +72,10 @@ function Quiz(Auth) {
       name: questions1.name,
       questions:resultsquiz
     }
-    console.log("data =>>>>>>>>>>", data);
     axios.post('/api/users/addquiz', data)
       .then(function (response) {
-        console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
       });
   };
 

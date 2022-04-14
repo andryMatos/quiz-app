@@ -16,7 +16,7 @@ class Dashboard extends Component {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
-          <div className="landing-copy col s12 center-align">
+          <div className="landing-copy col-md-12 center-align">
             <h4>
               <b>Bienvenido </b> {user.name.split(" ")[0]}
               <p className="flow-text grey-text text-darken-1">
@@ -24,6 +24,8 @@ class Dashboard extends Component {
                 <span style={{ fontFamily: "monospace" }}>Quiz</span> app 👏
               </p>
             </h4>
+          </div>
+          <div className="col-md-6">
             <button
               style={{
                 width: "150px",
@@ -36,6 +38,8 @@ class Dashboard extends Component {
             >
               Cerrar Sesión
             </button>
+          </div>
+          <div className="col-md-6">
             <Link
               to="/quiz"
               style={{
@@ -47,7 +51,8 @@ class Dashboard extends Component {
               >
                 Jugar
             </Link>
-
+          </div>
+          <div className="col-md-6">
             <Link
               to="/Catalog"
               style={{
@@ -60,6 +65,19 @@ class Dashboard extends Component {
                 Trivias Existentes
             </Link>
           </div>
+          <div className="col-md-6">
+            <Link
+              to="/games"
+              style={{
+                width: "140px",
+                borderRadius: "3px",
+                letterSpacing: "1.5px"
+              }}
+                className="btn btn-large btn-flat waves-effect white black-text"
+              >
+                Mis Juegos anteriores
+            </Link>
+          </div> 
         </div>
       </div>
     );

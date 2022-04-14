@@ -29,7 +29,6 @@ function Games(auth) {
         }
         axios.post('/api/users/getquizbyuser',data)
         .then(function (response) {
-            console.log("response=>>>>>", response.data.games);
             setGames(response.data.games);
         })
         .catch(function (error) {
@@ -42,28 +41,28 @@ function Games(auth) {
         <div className="container">
             <div className="row">
                 {games.map((game, index) =>(
-                    <div className="card" key={index}>
-                        <div className="card-header">
-                            {game.name} Tu puntuación: {game.score}
-                        </div>
-                        {game.questions.map((quest, idx) =>(
-                            <ul className="list-group list-group-flush" key={idx}>
-                                <h5>Pregunta #{idx + 1} {quest.texto}</h5>
-                                {quest.respuestas.map((res, id) => (
-                                    res.correcto && res.seleccion ?
-                                    <li className="list-group-item list-group-item-success" key={id}>Correcto: {res.texto}</li>
-                                    : res.seleccion ? 
-                                    <li className="list-group-item list-group-item-warning" key={id}>Tu selección :( :{res.texto}</li>
-                                    :
-                                    <li className="list-group-item" key={id}>{res.texto}</li>
+                    <div className="col-md-6" key={index}>
+                        <div className="card" >
+                            <div className="card-header">
+                                {game.name} Tu puntuación: {game.score}
+                            </div>
+                            {game.questions.map((quest, idx) =>(
+                                <ul className="list-group list-group-flush mt-4" key={idx}>
+                                    <h5>Pregunta #{idx + 1} {quest.texto}</h5>
+                                    {quest.respuestas.map((res, id) => (
+                                        res.correcto && res.seleccion ?
+                                        <li className="list-group-item list-group-item-success" key={id}>Correcto: {res.texto}</li>
+                                        : res.seleccion ? 
+                                        <li className="list-group-item list-group-item-warning" key={id}>Tu selección :( :{res.texto}</li>
+                                        :
+                                        <li className="list-group-item" key={id}>{res.texto}</li>
 
-                                ))}
-                            </ul>
-                        ))}
-                            
+                                    ))}
+                                </ul>
+                            ))} 
+                        </div>
                     </div>
                 ))}
-            
             </div>
         </div>
     )

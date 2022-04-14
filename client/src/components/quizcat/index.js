@@ -1,5 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 
 function Row({ onChange, onRemove, texto, correcto }) {
     return (
@@ -16,7 +18,7 @@ function Row({ onChange, onRemove, texto, correcto }) {
                     Correcta:
                     <input type="checkbox" value={correcto} onChange={e => onChange("correcto", e.target.value)} />
                 </label>
-                <div className="col-md-12">
+                <div className="col-md-4 offset-md-4">
                     <button type="button" className="btn btn-danger mb-4 mt-4" onClick={onRemove}>Eliminar</button>
                 </div>
             </div>
@@ -55,6 +57,9 @@ function Catalog(auth) {
     const [message, setMessage] = useState("");
     const [showMessageErr, setShowMessageErr] = useState(false);
     const [messageErr, setMessageErr] = useState("");
+    const [show, setShow] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [isOpen, setOpen] = useState(false);
 
     useEffect(() => {
         getData();
@@ -126,6 +131,7 @@ function Catalog(auth) {
               if(response.statusText = "OK"){
                 setPregunta("");
                 getData();
+                handleClose();
               }
           })
           .catch(function (error) {
@@ -163,6 +169,9 @@ function Catalog(auth) {
             axios.post('/api/quiz/addAnswer', preguntas)
               .then(function (response) {
                 getData();
+                closeEdit();
+                setShowMessage(true);
+                setMessage("Se ha guardado tu pregunta");
               })
               .catch(function (error) {
                 console.log(error);
@@ -178,6 +187,7 @@ function Catalog(auth) {
     }
 
     const handlebind = (data,idx) => {
+        closeDelete();
         setCurrentQuiz(data);
         setPosition(indexedDB);
     }
@@ -193,6 +203,7 @@ function Catalog(auth) {
                     getData();
                     setShowMessage(true);
                     setMessage("Se ha eliminado la trivia correctamente");
+                    closeDelete();
                 }
             })
             .catch(function (error) {
@@ -202,15 +213,22 @@ function Catalog(auth) {
     }
     
     const handleEdit = (data, idx) => {
+        closeEdit();
         setCurrentQuiz(data);
         setRows([defaultState]);
         setPregunta("");
     }
 
-    const ResetValues = () => {
-        setCurrentQuiz(defaultQuiz);
-        setPregunta("");
-        setRows([defaultState]);
+    const handleClose = () =>{
+        setShow(!show);
+    };
+
+    const closeEdit = () => {
+        setOpen(!isOpen);
+    }
+
+    const closeDelete = () => {
+        setModal(!modal);
     }
 
     return (
@@ -224,7 +242,7 @@ function Catalog(auth) {
                 <div></div>
                 }
                 <div className="col-md-12">
-                    <button type="button" className="btn btn-info add-new mb-4" data-toggle="modal" data-target="#AgregarModal" ><i className="material-icons">&#xE03B;</i> Nueva Trivia</button>
+                    <button type="button" className="btn btn-info add-new mb-4" onClick={() => handleClose()} ><i className="material-icons">&#xE03B;</i> Nueva Trivia</button>
                 </div>
                 <div className="col-md-12">
                     <table className="table table-bordered">
@@ -242,10 +260,10 @@ function Catalog(auth) {
                                     <button type="button" className="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" onClick={()=> handleView(tr, idx)}>
                                         <i className="material-icons">visibility</i>
                                     </button>
-                                    <button type="button" className="btn btn-warning mr-2" data-toggle="modal" data-target="#editarModal" onClick={()=> handleEdit(tr, idx)}>
+                                    <button type="button" className="btn btn-warning mr-2" onClick={()=> handleEdit(tr, idx)}>
                                         <i className="material-icons">edit</i>
                                     </button>
-                                    <button type="button" className="btn btn-danger mr-2" data-toggle="modal" data-target="#eliminarModal" onClick={() => handlebind(tr, idx)}>
+                                    <button type="button" className="btn btn-danger mr-2" onClick={() => handlebind(tr, idx)}>
                                         <i className="material-icons">delete_outline</i>
                                     </button>
                                     </td>
@@ -292,16 +310,10 @@ function Catalog(auth) {
                 </div>
 
                 {/* Modal Editar */}
-                <div className="modal fade" id="editarModal" tabIndex={"-1"} role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="editarModal">{currentQuiz.name}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
+                <Modal isOpen={isOpen}>
+                    <ModalHeader
+                        toggle={closeEdit}>{currentQuiz.name}</ModalHeader>
+                    <ModalBody>
                         {showMessageErr ? 
                             <div className="alert alert-danger">
                                 <a href="#" className="close" data-dismiss="alert" aria-label="close" onClick={() => setShowMessageErr(false)}>&times;</a>
@@ -309,95 +321,83 @@ function Catalog(auth) {
                             </div>:
                             <div></div>
                             }
-                            <div className="col-md-12">
+                        <div className="col-md-12">
                             <input
                                 value={pregunta}
                                 className="form-control mb-4"
                                 onChange={e => setPregunta(e.target.value)}
                                 placeholder="Escribe tu Pregunta"
                                 />
-                            </div>
-                            {rows.map((row, index) => (
-                                <div className="container" key={index}>
-                                    <Row
-                                    {...row}
-                                    onChange={(name, value) => handleOnChange(index, name, value)}
-                                    onRemove={() => handleOnRemove(index)}
-                                    key={index}
-                                    />
-                                </div>
-                            ))}
-                            <button type="button" className="btn btn-success mb-4" onClick={handleOnAdd}>Agregar</button>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-primary" onClick={saveAnswer}>Guardar Respuesta</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Modal Confirmar Eliminar */}
-                <div className="modal fade" id="eliminarModal" tabIndex={"-1"} role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="eliminarModalLabel">Se eliminará: {currentQuiz.name}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            ¿Estas seguro que deseas eliminar esta trivia?
-                            <span>Esta acción no se puede revertir</span>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-danger" onClick={handleDelete}>Eliminar</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Modal para agregar la trivia */}
-                <div className="modal fade" id="AgregarModal" tabIndex={"-1"} role="dialog" aria-labelledby="AgregarModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="AgregarModalLabel">Registrar nueva Trivia</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="form-outline mb-4">
-                                <div className="mb-4 mt-4">
-                                    <label>Selecciona la categoria</label>
-                                    < select
-                                        onChange={e => handleAddrTypeChange(e)}
-                                        className="browser-default custom-select" >
-                                        {
-                                            Add.map((name, key) => <option key={key} value={name}>{name}</option>)
-                                        }
-                                    </select >
-                                </div> 
-                            </div>
-                            <div className="col-md-12">
-                                <input
-                                value={quizName}
-                                className="form-control mb-4"
-                                onChange={e => setQuizName(e.target.value)}
-                                placeholder="Nombre de tu Trivia"
+                        {rows.map((row, index) => (
+                            <div className="container" key={index}>
+                                <Row
+                                {...row}
+                                onChange={(name, value) => handleOnChange(index, name, value)}
+                                onRemove={() => handleOnRemove(index)}
+                                key={index}
                                 />
                             </div>
+                        ))}
+                        <div className='col-md-4 offset-md-4'>
+                            <button type="button" className="btn btn-success mb-4" onClick={handleOnAdd}>Agregar</button>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-primary" onClick={saveQuestion}>Guardar</button>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={closeEdit}>Cancelar</Button>
+                        <Button color="success" onClick={saveAnswer}>Guardar Respuestas</Button>
+                    </ModalFooter>
+                </Modal>
+
+                {/* Modal Confirmar Eliminar */}
+                <Modal isOpen={modal}>
+                    <ModalHeader
+                        toggle={closeDelete}>{currentQuiz.name}</ModalHeader>
+                    <ModalBody>
+                        ¿Estas seguro de eliminar esta trivia?
+                        <br></br>
+                        Esta acción no puede revertirse
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={closeDelete}>Cancelar</Button>
+                        <Button color="danger" onClick={handleDelete}>Eliminar</Button>
+                    </ModalFooter>
+                </Modal>
+                
+                {/* Modal para agregar la trivia */}
+                <Modal isOpen={show}>
+                    <ModalHeader
+                        toggle={handleClose}>{currentQuiz.name}</ModalHeader>
+                    <ModalBody>
+                        <div className="form-outline mb-4">
+                            <div className="mb-4 mt-4">
+                                <label>Selecciona la categoria</label>
+                                < select
+                                    onChange={e => handleAddrTypeChange(e)}
+                                    className="browser-default custom-select" >
+                                    {
+                                        Add.map((name, key) => <option key={key} value={name}>{name}</option>)
+                                    }
+                                </select >
+                            </div> 
                         </div>
+                        <div className="col-md-12">
+                            <input
+                            value={quizName}
+                            className="form-control mb-4"
+                            onChange={e => setQuizName(e.target.value)}
+                            placeholder="Nombre de tu Trivia"
+                            />
                         </div>
-                    </div>
-                </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={handleClose}>Cancelar</Button>
+                        <Button color="danger" onClick={saveQuestion}>Guardar</Button>
+                    </ModalFooter>
+                </Modal>
+
+                
+
             </div>
     </div>
   );

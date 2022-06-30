@@ -27,3 +27,37 @@ Quiz App is a quiz app (obviously), with some basic skills. This is a simple tas
 * The list of questions must be in redux and update the redux status when creating/editing/deleting the questionnaire.
 * The list of questions can be in redux or you can extract the questions from the API when the user clicks on the quiz detail or on the playback.
 * You can use any UI framework such as bootstrap, ant design or material - UI
+
+## Install
+
+Clone the repository
+
+```
+git clone git@github.com:andryMatos/quiz-app.git
+```
+
+Add the following line that will help our client to know our server in the client/package.json file
+ 
+```
+  "proxy": "http://localhost:5000",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+```
+
+Run the following command on both the server and the client project
+
+```
+npm install
+npm run start
+
+cd client
+npm install
+npm run start
+```
+
+## Live preview
+
+https://protected-beach-40732.herokuapp.com/
+
+Good Game!
